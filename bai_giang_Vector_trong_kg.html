@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bài Giảng Tương Tác: Vectơ Trong Không Gian - Vietschool LMS</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- MathJax Config & Library -->
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true
+            },
+            options: {
+                ignoreHtmlClass: 'tex2jax_ignore',
+                processHtmlClass: 'tex2jax_process'
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; color: #1e293b; }
+        .tab-btn.active { background-color: #0284c7; color: white; border-color: #0284c7; }
+        .quiz-opt:hover { background-color: #f1f5f9; }
+        .quiz-opt.selected { border-color: #0284c7; background-color: #e0f2fe; }
+        .quiz-opt.correct { border-color: #16a34a; background-color: #dcfce7; }
+        .quiz-opt.incorrect { border-color: #dc2626; background-color: #fee2e2; }
+    </style>
+</head>
+<body class="bg-slate-50 min-h-screen flex flex-col">
+
+    <!-- LMS HEADER BRANDING -->
+    <header class="bg-sky-900 text-white shadow-md sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center space-x-3">
+                <div class="bg-sky-600 p-2 rounded-lg">
+                    <i class="fa-solid fa-cube text-2xl text-amber-300"></i>
+                </div>
+                <div>
+                    <span class="text-xs text-sky-200 uppercase tracking-widest font-semibold block">Vietschool LMS • Toán Học 12</span>
+                    <h1 class="text-xl font-bold">CHUYÊN ĐỀ: VECTƠ TRONG KHÔNG GIAN</h1>
+                </div>
+            </div>
+            <div class="hidden md:flex items-center space-x-4 text-sm">
+                <span class="bg-sky-800 px-3 py-1 rounded-full text-sky-200 border border-sky-700">
+                    <i class="fa-regular fa-clock mr-1"></i> Thời lượng: 45 phút
+                </span>
+                <span class="bg-amber-500 text-slate-900 font-semibold px-3 py-1 rounded-full">
+                    Chương II - Hình Học 12
+                </span>
+            </div>
+        </div>
+    </header>
+
+    <!-- NAVIGATION TABS -->
+    <div class="bg-white border-b border-slate-200 sticky top-[61px] z-40 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 flex space-x-2 md:space-x-4 overflow-x-auto py-2">
+            <button onclick="switchTab('theory')" id="tab-theory" class="tab-btn active px-4 py-2 rounded-lg font-medium text-sm border border-transparent transition flex items-center gap-2 whitespace-nowrap">
+                <i class="fa-solid fa-book-open"></i> 1. Lý Thuyết Trọng Tâm
+            </button>
+            <button onclick="switchTab('methods')" id="tab-methods" class="tab-btn px-4 py-2 rounded-lg font-medium text-sm text-slate-600 hover:bg-slate-100 border border-transparent transition flex items-center gap-2 whitespace-nowrap">
+                <i class="fa-solid fa-lightbulb"></i> 2. Dạng Toán & Phương Pháp
+            </button>
+            <button onclick="switchTab('practice')" id="tab-practice" class="tab-btn px-4 py-2 rounded-lg font-medium text-sm text-slate-600 hover:bg-slate-100 border border-transparent transition flex items-center gap-2 whitespace-nowrap">
+                <i class="fa-solid fa-pen-to-square"></i> 3. Luyện Tập Tương Tác
+            </button>
+        </div>
+    </div>
+
+    <!-- MAIN CONTENT CONTAINER -->
+    <main class="max-w-7xl mx-auto px-4 py-6 flex-grow w-full">
+
+        <!-- TAB 1: LÝ THUYẾT TRỌNG TÂM -->
+        <section id="sec-theory" class="space-y-6">
+            
+            <!-- Welcome Banner -->
+            <div class="bg-gradient-to-r from-sky-600 to-blue-700 text-white rounded-2xl p-6 shadow-lg flex flex-col md:flex-row items-center justify-between gap-6">
+                <div class="space-y-2">
+                    <h2 class="text-2xl font-bold">Khám phá Vectơ trong Không gian 3 Chiều</h2>
+                    <p class="text-sky-100 text-sm max-w-2xl">
+                        Vectơ trong không gian giữ nguyên các tính chất cơ bản của vectơ trong mặt phẳng, đồng thời mở rộng thêm các quy tắc không gian quan trọng như <b>Quy tắc hình hộp</b> và các hệ thức trọng tâm tứ diện.
+                    </p>
+                </div>
+                <div class="bg-white/10 p-4 rounded-xl border border-white/20 backdrop-blur-sm text-center min-w-[200px]">
+                    <i class="fa-solid fa-graduation-cap text-3xl text-amber-300 mb-1"></i>
+                    <p class="text-xs text-sky-200">Mục tiêu bài học</p>
+                    <p class="text-sm font-semibold">Nắm vững 4 Phép toán & Quy tắc Hình hộp</p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- Content Left Column -->
+                <div class="lg:col-span-2 space-y-6">
+                    
+                    <!-- Card 1: Khái niệm -->
+                    <div class="bg-white rounded-xl p-6 border border-slate-200 shadow-sm space-y-4">
+                        <h3 class="text-lg font-bold text-sky-900 border-b pb-2 flex items-center gap-2">
+                            <i class="fa-solid fa-arrows-up-down-left-right text-sky-600"></i>
+                            1. Khái niệm Vectơ trong không gian
+                        </h3>
+                        <ul class="space-y-3 text-sm text-slate-700">
+                            <li class="flex items-start gap-2">
+                                <i class="fa-solid fa-circle-check text-sky-500 mt-1"></i>
+                                <span><b>Định nghĩa:</b> Vectơ trong không gian là một đoạn thẳng có hướng. Kí hiệu $\overrightarrow{AB}$ (điểm đầu $A$, điểm cuối $B$) hoặc $\overrightarrow{a}, \overrightarrow{b}, \overrightarrow{u}, \overrightarrow{v}$.</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <i class="fa-solid fa-circle-check text-sky-500 mt-1"></i>
+                                <span><b>Độ dài:</b> Độ dài của vectơ $\overrightarrow{AB}$ là khoảng cách giữa hai điểm $A$ và $B$, kí hiệu $|\overrightarrow{AB}| = AB$.</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <i class="fa-solid fa-circle-check text-sky-500 mt-1"></i>
+                                <span><b>Giá & Sự cùng phương:</b> Giá của vectơ là đường thẳng đi qua điểm đầu và điểm cuối. Hai vectơ cùng phương nếu giá của chúng song song hoặc trùng nhau.</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <i class="fa-solid fa-circle-check text-sky-500 mt-1"></i>
+                                <span><b>Hai vectơ bằng nhau:</b> Hai vectơ $\overrightarrow{a}$ và $\overrightarrow{b}$ bằng nhau ($\overrightarrow{a} = \overrightarrow{b}$) nếu chúng <b>cùng hướng</b> và <b>cùng độ dài</b>.</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Card 2: Phép toán Vectơ -->
+                    <div class="bg-white rounded-xl p-6 border border-slate-200 shadow-sm space-y-4">
+                        <h3 class="text-lg font-bold text-sky-900 border-b pb-2 flex items-center gap-2">
+                            <i class="fa-solid fa-calculator text-sky-600"></i>
+                            2. Các Phép Toán & Quy Tắc
+                        </h3>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                            <div class="p-4 bg-slate-50 rounded-lg border border-slate-200">
+                                <h4 class="font-bold text-sky-800 mb-2">Quy tắc 3 điểm & HBH</h4>
+                                <p class="mb-1">• Quy tắc 3 điểm: $\overrightarrow{AB} + \overrightarrow{BC} = \overrightarrow{AC}$</p>
+                                <p>• Quy tắc HBH: $\overrightarrow{AB} + \overrightarrow{AD} = \overrightarrow{AC}$</p>
+                            </div>
+                            <div class="p-4 bg-sky-50 rounded-lg border border-sky-200">
+                                <h4 class="font-bold text-sky-900 mb-2 text-sky-700">Quy tắc Hình Hộp (Quan trọng)</h4>
+                                <p class="text-sky-900">Cho hình hộp $ABCD.A'B'C'D'$, ta có:</p>
+                                <p class="font-bold text-base text-sky-900 my-1">$$\overrightarrow{AB} + \overrightarrow{AD} + \overrightarrow{AA'} = \overrightarrow{AC'}$$</p>
+                            </div>
+                        </div>
+
+                        <div class="p-4 bg-amber-50 rounded-lg border border-amber-200 text-sm space-y-2">
+                            <h4 class="font-bold text-amber-900">Hệ thức Trung điểm & Trọng tâm</h4>
+                            <p>• $I$ là trung điểm $AB \iff \overrightarrow{IA} + \overrightarrow{IB} = \overrightarrow{0} \iff \overrightarrow{OA} + \overrightarrow{OB} = 2\overrightarrow{OI}$</p>
+                            <p>• $G$ là trọng tâm $\Delta ABC \iff \overrightarrow{GA} + \overrightarrow{GB} + \overrightarrow{GC} = \overrightarrow{0} \iff \overrightarrow{OA} + \overrightarrow{OB} + \overrightarrow{OC} = 3\overrightarrow{OG}$</p>
+                            <p>• $G$ là trọng tâm tứ diện $ABCD \iff \overrightarrow{GA} + \overrightarrow{GB} + \overrightarrow{GC} + \overrightarrow{GD} = \overrightarrow{0}$</p>
+                        </div>
+                    </div>
+
+                    <!-- Card 3: Góc & Tích vô hướng -->
+                    <div class="bg-white rounded-xl p-6 border border-slate-200 shadow-sm space-y-4">
+                        <h3 class="text-lg font-bold text-sky-900 border-b pb-2 flex items-center gap-2">
+                            <i class="fa-solid fa-compass text-sky-600"></i>
+                            3. Góc giữa 2 Vectơ & Tích Vô Hướng
+                        </h3>
+                        <div class="text-sm space-y-3">
+                            <p><b>Góc giữa hai vectơ:</b> Lấy điểm $O$ bất kỳ, vẽ $\overrightarrow{OA} = \overrightarrow{a}, \overrightarrow{OB} = \overrightarrow{b}$. Khi đó $(\overrightarrow{a}, \overrightarrow{b}) = \widehat{AOB}$ với $0^\circ \le \widehat{AOB} \le 180^\circ$.</p>
+                            <div class="bg-slate-100 p-3 rounded-lg text-center">
+                                Công thức Tích vô hướng: 
+                                <span class="font-bold text-sky-900 block text-base my-1">$$\overrightarrow{a} \cdot \overrightarrow{b} = |\overrightarrow{a}| \cdot |\overrightarrow{b}| \cdot \cos(\overrightarrow{a}, \overrightarrow{b})$$</span>
+                            </div>
+                            <p><b>Hệ quả vuông góc:</b> $\overrightarrow{a} \perp \overrightarrow{b} \iff \overrightarrow{a} \cdot \overrightarrow{b} = 0$.</p>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Content Right Column (Visual SVG Diagrams) -->
+                <div class="space-y-6">
+                    <div class="bg-white rounded-xl p-6 border border-slate-200 shadow-sm text-center">
+                        <h4 class="font-bold text-slate-800 mb-3 text-sm">Mô Hình Khởi Tạo Quy Tắc Hình Hộp</h4>
+                        <!-- SVG Hình Hộp 3D -->
+                        <svg viewBox="0 0 320 260" class="w-full h-auto max-w-[280px] mx-auto border rounded-lg bg-slate-900">
+                            <!-- Background Grid Effect -->
+                            <defs>
+                                <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#0284c7;stop-opacity:0.2" />
+                                    <stop offset="100%" style="stop-color:#38bdf8;stop-opacity:0.05" />
+                                </linearGradient>
+                            </defs>
+                            <rect width="320" height="260" fill="url(#grad1)" />
+                            
+                            <!-- Dashed Back Edges -->
+                            <line x1="60" y1="180" x2="150" y2="150" stroke="#64748b" stroke-width="1.5" stroke-dasharray="4,4"/>
+                            <line x1="150" y1="150" x2="270" y2="150" stroke="#64748b" stroke-width="1.5" stroke-dasharray="4,4"/>
+                            <line x1="150" y1="150" x2="150" y2="50" stroke="#64748b" stroke-width="1.5" stroke-dasharray="4,4"/>
+                            <line x1="60" y1="80" x2="150" y2="50" stroke="#64748b" stroke-width="1.5" stroke-dasharray="4,4"/>
+
+                            <!-- Solid Front Edges -->
+                            <polygon points="60,180 180,180 270,150 150,150" fill="none" stroke="#94a3b8" stroke-width="1"/>
+                            <line x1="60" y1="180" x2="180" y2="180" stroke="#f8fafc" stroke-width="2"/>
+                            <line x1="180" y1="180" x2="270" y2="150" stroke="#f8fafc" stroke-width="2"/>
+                            <line x1="60" y1="180" x2="60" y2="80" stroke="#f8fafc" stroke-width="2"/>
+                            <line x1="180" y1="180" x2="180" y2="80" stroke="#f8fafc" stroke-width="2"/>
+                            <line x1="270" y1="150" x2="270" y2="50" stroke="#f8fafc" stroke-width="2"/>
+                            <line x1="60" y1="80" x2="180" y2="80" stroke="#f8fafc" stroke-width="2"/>
+                            <line x1="180" y1="80" x2="270" y2="50" stroke="#f8fafc" stroke-width="2"/>
+
+                            <!-- Vector Arrows (AB, AD, AA', AC') -->
+                            <!-- AB -->
+                            <line x1="60" y1="180" x2="175" y2="180" stroke="#ef4444" stroke-width="3" marker-end="url(#arrow)"/>
+                            <!-- AD -->
+                            <line x1="60" y1="180" x2="145" y2="152" stroke="#ef4444" stroke-width="3"/>
+                            <!-- AA' -->
+                            <line x1="60" y1="180" x2="60" y2="85" stroke="#ef4444" stroke-width="3"/>
+                            <!-- Diagonal AC' -->
+                            <line x1="60" y1="180" x2="265" y2="53" stroke="#eab308" stroke-width="3.5"/>
+
+                            <!-- Text Labels -->
+                            <text x="45" y="195" fill="#38bdf8" font-size="14" font-weight="bold">A</text>
+                            <text x="185" y="195" fill="#f8fafc" font-size="12">B</text>
+                            <text x="280" y="160" fill="#f8fafc" font-size="12">C</text>
+                            <text x="140" y="140" fill="#94a3b8" font-size="12">D</text>
+                            <text x="45" y="75" fill="#f8fafc" font-size="12">A'</text>
+                            <text x="275" y="45" fill="#eab308" font-size="14" font-weight="bold">C'</text>
+                        </svg>
+                        <p class="text-xs text-slate-500 mt-2">Đường chéo $\overrightarrow{AC'}$ (màu vàng) là tổng của 3 vectơ cạnh xuất phát từ đỉnh $A$ (màu đỏ).</p>
+                    </div>
+
+                    <div class="bg-amber-50 rounded-xl p-5 border border-amber-200">
+                        <h4 class="font-bold text-amber-900 text-sm mb-2 flex items-center gap-2">
+                            <i class="fa-solid fa-lightbulb"></i> Mẹo tự học nhanh:
+                        </h4>
+                        <p class="text-xs text-amber-800 leading-relaxed">
+                            Khi tính tích vô hướng hoặc góc giữa hai vectơ chéo nhau trong hình lập phương/lăng trụ, hãy luôn tìm một vectơ bằng nó nằm trên mặt phẳng dễ quan sát hơn để đưa về cùng một gốc $O$!
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- TAB 2: CÁC DẠNG TOÁN & PHƯƠNG PHÁP -->
+        <section id="sec-methods" class="hidden space-y-6">
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Dạng 1 -->
+                <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden flex flex-col">
+                    <div class="bg-sky-600 text-white p-4 font-bold text-base flex items-center justify-between">
+                        <span>Dạng 1: Đẳng Thức & Độ Dài</span>
+                        <span class="bg-sky-800 text-xs px-2 py-1 rounded">Cơ bản</span>
+                    </div>
+                    <div class="p-5 text-sm space-y-3 flex-grow">
+                        <h5 class="font-semibold text-slate-800">Phương pháp giải:</h5>
+                        <ul class="list-disc list-inside text-slate-600 space-y-1">
+                            <li>Sử dụng quy tắc 3 điểm, quy tắc trừ.</li>
+                            <li>Sử dụng quy tắc hình bình hành, hình hộp.</li>
+                            <li>Biến đổi $VT - VP = \overrightarrow{0}$.</li>
+                            <li>Để tính $|\overrightarrow{u}|$, tính $|\overrightarrow{u}|^2 = \overrightarrow{u}^2$.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Dạng 2 -->
+                <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden flex flex-col">
+                    <div class="bg-blue-600 text-white p-4 font-bold text-base flex items-center justify-between">
+                        <span>Dạng 2: Phân Tích Vectơ</span>
+                        <span class="bg-blue-800 text-xs px-2 py-1 rounded">Thông hiểu</span>
+                    </div>
+                    <div class="p-5 text-sm space-y-3 flex-grow">
+                        <h5 class="font-semibold text-slate-800">Phương pháp giải:</h5>
+                        <ul class="list-disc list-inside text-slate-600 space-y-1">
+                            <li>Chọn 3 vectơ cơ sở không đồng phẳng xuất phát từ 1 đỉnh (ví dụ $\overrightarrow{AB}, \overrightarrow{AD}, \overrightarrow{AA'}$).</li>
+                            <li>Chèn điểm hoặc dùng hệ thức trung điểm, trọng tâm để phân tích vectơ cần tìm.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Dạng 3 -->
+                <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden flex flex-col">
+                    <div class="bg-indigo-600 text-white p-4 font-bold text-base flex items-center justify-between">
+                        <span>Dạng 3: Góc & Tích Vô Hướng</span>
+                        <span class="bg-indigo-800 text-xs px-2 py-1 rounded">Vận dụng</span>
+                    </div>
+                    <div class="p-5 text-sm space-y-3 flex-grow">
+                        <h5 class="font-semibold text-slate-800">Phương pháp giải:</h5>
+                        <ul class="list-disc list-inside text-slate-600 space-y-1">
+                            <li>Đưa về cùng điểm gốc để xác định góc trực tiếp.</li>
+                            <li>Biểu diễn các vectơ qua bộ vectơ cơ sở đã biết độ dài và góc giữa chúng rồi nhân phân phối.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Ví dụ minh họa có ẩn/hiện Lời giải -->
+            <div class="bg-white rounded-xl p-6 border border-slate-200 shadow-sm space-y-4">
+                <h3 class="text-lg font-bold text-sky-900 border-b pb-2">Ví dụ Minh Họa Mẫu</h3>
+                
+                <div class="p-4 bg-slate-50 rounded-lg space-y-3">
+                    <p class="font-semibold text-slate-800 text-sm">
+                        [Ví dụ]: Cho hình chóp $S.ABCD$ có đáy $ABCD$ là hình bình hành tâm $O$. Chứng minh rằng $\overrightarrow{SA} + \overrightarrow{SC} = \overrightarrow{SB} + \overrightarrow{SD} = 2\overrightarrow{SO}$.
+                    </p>
+                    <button onclick="toggleSolution('sol-ex1')" class="px-3 py-1.5 bg-sky-600 hover:bg-sky-700 text-white text-xs rounded-lg font-medium transition flex items-center gap-1">
+                        <i class="fa-solid fa-eye"></i> Xem Lời Giải
+                    </button>
+                    <div id="sol-ex1" class="hidden p-4 bg-white border border-sky-200 rounded-lg text-sm text-slate-700 space-y-2">
+                        <p> Vì $ABCD$ là hình bình hành tâm $O$ nên $O$ là trung điểm của $AC$ và $BD$.</p>
+                        <p>• Trong $\Delta SAC$, do $O$ là trung điểm $AC \implies \overrightarrow{SA} + \overrightarrow{SC} = 2\overrightarrow{SO}$.</p>
+                        <p>• Trong $\Delta SBD$, do $O$ là trung điểm $BD \implies \overrightarrow{SB} + \overrightarrow{SD} = 2\overrightarrow{SO}$.</p>
+                        <p>Từ đó suy ra $\overrightarrow{SA} + \overrightarrow{SC} = \overrightarrow{SB} + \overrightarrow{SD} = 2\overrightarrow{SO}$ (ĐPCM).</p>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- TAB 3: LUYỆN TẬP TƯƠNG TÁC (EX_TEST STANDARD) -->
+        <section id="sec-practice" class="hidden space-y-8">
+            
+            <!-- Quiz Control Header -->
+            <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex flex-wrap justify-between items-center gap-4">
+                <div>
+                    <h3 class="font-bold text-slate-800 text-base">Hệ Thống Câu Hỏi Trắc Nghiệm Tương Tác</h3>
+                    <p class="text-xs text-slate-500">Chuẩn cấu trúc đề thi mới (Trắc nghiệm 1 đáp án, Đúng/Sai, Trả lời ngắn, Tự luận)</p>
+                </div>
+                <div class="flex items-center gap-3">
+                    <div class="text-right">
+                        <span class="text-xs text-slate-500 block">Điểm số hiện tại</span>
+                        <span id="score-display" class="font-bold text-sky-600 text-lg">0 / 8</span>
+                    </div>
+                    <button onclick="resetQuiz()" class="px-3 py-2 bg-slate-200 hover:bg-slate-300 text-slate-700 text-xs font-semibold rounded-lg transition">
+                        <i class="fa-solid fa-rotate-right mr-1"></i> Làm lại
+                    </button>
+                </div>
+            </div>
+
+            <!-- QUESTION TYPE 1: MCQ 1 OPTION -->
+            <div class="space-y-6">
+                <h4 class="font-bold text-sky-900 border-l-4 border-sky-600 pl-3 text-base">Phần 1. Trắc nghiệm nhiều lựa chọn (1 phương án đúng)</h4>
+
+                <!-- Câu 1 -->
+                <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm space-y-4" id="q1-box">
+                    <p class="font-semibold text-slate-800 text-sm">
+                        <span class="text-sky-600">Câu 1:</span> Cho hình lập phương $ABCD.A'B'C'D'$ có cạnh bằng $a$. Mệnh đề nào sau đây là <b>đúng</b>?
+                    </p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
+                        <button onclick="checkMCQ(1, 'A', false)" class="q1-opt quiz-opt text-left p-3 rounded-lg border border-slate-200 transition">
+                            <b>A.</b> $\overrightarrow{AB} + \overrightarrow{AD} + \overrightarrow{AA'} = \overrightarrow{AC}$
+                        </button>
+                        <button onclick="checkMCQ(1, 'B', true)" class="q1-opt quiz-opt text-left p-3 rounded-lg border border-slate-200 transition">
+                            <b>B.</b> $\overrightarrow{AB} + \overrightarrow{AD} + \overrightarrow{AA'} = \overrightarrow{AC'}$
+                        </button>
+                        <button onclick="checkMCQ(1, 'C', false)" class="q1-opt quiz-opt text-left p-3 rounded-lg border border-slate-200 transition">
+                            <b>C.</b> $\overrightarrow{AC} + \overrightarrow{A'C'} = \overrightarrow{0}$
+                        </button>
+                        <button onclick="checkMCQ(1, 'D', false)" class="q1-opt quiz-opt text-left p-3 rounded-lg border border-slate-200 transition">
+                            <b>D.</b> $\overrightarrow{AB} + \overrightarrow{CD} = \overrightarrow{0}$
+                        </button>
+                    </div>
+                    <div id="q1-explanation" class="hidden p-3 bg-slate-50 border border-slate-200 text-xs text-slate-700 rounded-lg">
+                        <b>Lời giải:</b> Theo quy tắc hình hộp áp dụng cho hình lập phương $ABCD.A'B'C'D'$, tổng 3 vectơ cạnh chung gốc $A$ bằng vectơ đường chéo $\overrightarrow{AC'}$. Đáp án đúng là <b>B</b>.
+                    </div>
+                </div>
+
+                <!-- Câu 2 -->
+                <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm space-y-4" id="q2-box">
+                    <p class="font-semibold text-slate-800 text-sm">
+                        <span class="text-sky-600">Câu 2:</span> Cho tứ diện $ABCD$. Gọi $G$ là trọng tâm của tam giác $BCD$. Mệnh đề nào sau đây đúng?
+                    </p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
+                        <button onclick="checkMCQ(2, 'A', false)" class="q2-opt quiz-opt text-left p-3 rounded-lg border border-slate-200 transition">
+                            <b>A.</b> $\overrightarrow{AB} + \overrightarrow{AC} + \overrightarrow{AD} = \overrightarrow{AG}$
+                        </button>
+                        <button onclick="checkMCQ(2, 'B', false)" class="q2-opt quiz-opt text-left p-3 rounded-lg border border-slate-200 transition">
+                            <b>B.</b> $\overrightarrow{AB} + \overrightarrow{AC} + \overrightarrow{AD} = 2\overrightarrow{AG}$
+                        </button>
+                        <button onclick="checkMCQ(2, 'C', true)" class="q2-opt quiz-opt text-left p-3 rounded-lg border border-slate-200 transition">
+                            <b>C.</b> $\overrightarrow{AB} + \overrightarrow{AC} + \overrightarrow{AD} = 3\overrightarrow{AG}$
+                        </button>
+                        <button onclick="checkMCQ(2, 'D', false)" class="q2-opt quiz-opt text-left p-3 rounded-lg border border-slate-200 transition">
+                            <b>D.</b> $\overrightarrow{AB} + \overrightarrow{AC} + \overrightarrow{AD} = 4\overrightarrow{AG}$
+                        </button>
+                    </div>
+                    <div id="q2-explanation" class="hidden p-3 bg-slate-50 border border-slate-200 text-xs text-slate-700 rounded-lg">
+                        <b>Lời giải:</b> Do $G$ là trọng tâm tam giác $BCD$ nên $\overrightarrow{GB} + \overrightarrow{GC} + \overrightarrow{GD} = \overrightarrow{0}$. Chèn điểm $A$ vào vế trái ta được $3\overrightarrow{AG}$. Đáp án <b>C</b>.
+                    </div>
+                </div>
+
+                <!-- Câu 3 -->
+                <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm space-y-4" id="q3-box">
+                    <p class="font-semibold text-slate-800 text-sm">
+                        <span class="text-sky-600">Câu 3:</span> Cho hình lập phương $ABCD.A'B'C'D'$. Góc giữa hai vectơ $\overrightarrow{AC}$ và $\overrightarrow{A'D'}$ bằng:
+                    </p>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-3 text-sm">
+                        <button onclick="checkMCQ(3, 'A', false)" class="q3-opt quiz-opt text-center p-3 rounded-lg border border-slate-200 transition">
+                            <b>A.</b> $30^\circ$
+                        </button>
+                        <button onclick="checkMCQ(3, 'B', true)" class="q3-opt quiz-opt text-center p-3 rounded-lg border border-slate-200 transition">
+                            <b>B.</b> $45^\circ$
+                        </button>
+                        <button onclick="checkMCQ(3, 'C', false)" class="q3-opt quiz-opt text-center p-3 rounded-lg border border-slate-200 transition">
+                            <b>C.</b> $60^\circ$
+                        </button>
+                        <button onclick="checkMCQ(3, 'D', false)" class="q3-opt quiz-opt text-center p-3 rounded-lg border border-slate-200 transition">
+                            <b>D.</b> $90^\circ$
+                        </button>
+                    </div>
+                    <div id="q3-explanation" class="hidden p-3 bg-slate-50 border border-slate-200 text-xs text-slate-700 rounded-lg">
+                        <b>Lời giải:</b> Ta có $\overrightarrow{A'D'} = \overrightarrow{AD}$. Do đó $(\overrightarrow{AC}, \overrightarrow{A'D'}) = (\overrightarrow{AC}, \overrightarrow{AD}) = \widehat{CAD} = 45^\circ$. Đáp án <b>B</b>.
+                    </div>
+                </div>
+            </div>
+
+            <!-- QUESTION TYPE 2: TRUE / FALSE -->
+            <div class="space-y-6">
+                <h4 class="font-bold text-sky-900 border-l-4 border-sky-600 pl-3 text-base">Phần 2. Trắc nghiệm Đúng / Sai</h4>
+
+                <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm space-y-4">
+                    <p class="font-semibold text-slate-800 text-sm">
+                        <span class="text-sky-600">Câu 4:</span> Cho hình hộp $ABCD.A'B'C'D'$. Xét tính đúng/sai của các phát biểu sau:
+                    </p>
+                    
+                    <div class="space-y-3 text-sm">
+                        <!-- Ý a -->
+                        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center p-3 bg-slate-50 rounded-lg gap-2">
+                            <span>a) Hai vectơ $\overrightarrow{AB}$ và $\overrightarrow{C'D'}$ là hai vectơ ngược hướng.</span>
+                            <div class="flex gap-2">
+                                <button onclick="checkTF(4, 'a', true, true)" id="btn-4a-T" class="px-3 py-1 rounded border bg-white hover:bg-emerald-100 text-xs font-semibold">Đúng</button>
+                                <button onclick="checkTF(4, 'a', false, true)" id="btn-4a-F" class="px-3 py-1 rounded border bg-white hover:bg-rose-100 text-xs font-semibold">Sai</button>
+                            </div>
+                        </div>
+                        <!-- Ý b -->
+                        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center p-3 bg-slate-50 rounded-lg gap-2">
+                            <span>b) Vectơ $\overrightarrow{AB} + \overrightarrow{B'C'} = \overrightarrow{AC'}$.</span>
+                            <div class="flex gap-2">
+                                <button onclick="checkTF(4, 'b', true, false)" id="btn-4b-T" class="px-3 py-1 rounded border bg-white hover:bg-emerald-100 text-xs font-semibold">Đúng</button>
+                                <button onclick="checkTF(4, 'b', false, false)" id="btn-4b-F" class="px-3 py-1 rounded border bg-white hover:bg-rose-100 text-xs font-semibold">Sai</button>
+                            </div>
+                        </div>
+                        <!-- Ý c -->
+                        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center p-3 bg-slate-50 rounded-lg gap-2">
+                            <span>c) Vectơ $\overrightarrow{AB} + \overrightarrow{AD} + \overrightarrow{AA'} = \overrightarrow{AC'}$.</span>
+                            <div class="flex gap-2">
+                                <button onclick="checkTF(4, 'c', true, true)" id="btn-4c-T" class="px-3 py-1 rounded border bg-white hover:bg-emerald-100 text-xs font-semibold">Đúng</button>
+                                <button onclick="checkTF(4, 'c', false, true)" id="btn-4c-F" class="px-3 py-1 rounded border bg-white hover:bg-rose-100 text-xs font-semibold">Sai</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- QUESTION TYPE 3: SHORT ANSWER -->
+            <div class="space-y-6">
+                <h4 class="font-bold text-sky-900 border-l-4 border-sky-600 pl-3 text-base">Phần 3. Câu hỏi trả lời ngắn</h4>
+
+                <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm space-y-4">
+                    <p class="font-semibold text-slate-800 text-sm">
+                        <span class="text-sky-600">Câu 5:</span> Cho hình lập phương $ABCD.A'B'C'D'$ có cạnh bằng $2$. Tính giá trị của tích vô hướng $\overrightarrow{AC} \cdot \overrightarrow{A'D'}$.
+                    </p>
+                    <div class="flex items-center gap-3">
+                        <input type="text" id="short-ans-5" placeholder="Nhập kết quả..." class="p-2 border border-slate-300 rounded-lg text-sm w-40 focus:outline-none focus:ring-2 focus:ring-sky-500">
+                        <button onclick="checkShortAns(5, '4')" class="px-4 py-2 bg-sky-600 text-white text-xs font-semibold rounded-lg hover:bg-sky-700 transition">
+                            Gửi kết quả
+                        </button>
+                    </div>
+                    <div id="short-ans-5-feedback" class="hidden text-xs font-semibold"></div>
+                </div>
+            </div>
+
+            <!-- QUESTION TYPE 4: ESSAY WITH SOLUTION TOGGLE -->
+            <div class="space-y-6">
+                <h4 class="font-bold text-sky-900 border-l-4 border-sky-600 pl-3 text-base">Phần 4. Bài tập tự luận luyện tập</h4>
+
+                <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm space-y-4">
+                    <p class="font-semibold text-slate-800 text-sm">
+                        <span class="text-sky-600">Bài tập Tự luận:</span> Cho hình chóp $S.ABCD$ có đáy $ABCD$ là hình bình hành. Gọi $M, N$ lần lượt là trung điểm của các cạnh $AB, CD$. Chứng minh rằng $\overrightarrow{MN} = \dfrac{1}{2}(\overrightarrow{AD} + \overrightarrow{BC})$.
+                    </p>
+                    <button onclick="toggleSolution('sol-essay')" class="px-3 py-1.5 bg-amber-500 hover:bg-amber-600 text-slate-900 text-xs font-semibold rounded-lg transition flex items-center gap-1">
+                        <i class="fa-solid fa-code-compare"></i> Xem Lời Giải Chi Tiết
+                    </button>
+                    <div id="sol-essay" class="hidden p-4 bg-amber-50/50 border border-amber-200 rounded-lg text-sm space-y-2 text-slate-700">
+                        <p><b>Lời giải chi tiết:</b></p>
+                        <p>Ta có biến đổi vectơ qua đường gấp khúc:</p>
+                        <p>$\overrightarrow{MN} = \overrightarrow{MA} + \overrightarrow{AD} + \overrightarrow{DN}$ (1)</p>
+                        <p>$\overrightarrow{MN} = \overrightarrow{MB} + \overrightarrow{BC} + \overrightarrow{CN}$ (2)</p>
+                        <p>Cộng vế với vế của (1) và (2), ta được:</p>
+                        <p>$2\overrightarrow{MN} = (\overrightarrow{MA} + \overrightarrow{MB}) + (\overrightarrow{AD} + \overrightarrow{BC}) + (\overrightarrow{DN} + \overrightarrow{CN})$</p>
+                        <p>Vì $M$ là trung điểm $AB \implies \overrightarrow{MA} + \overrightarrow{MB} = \overrightarrow{0}$.</p>
+                        <p>Vì $N$ là trung điểm $CD \implies \overrightarrow{DN} + \overrightarrow{CN} = \overrightarrow{0}$.</p>
+                        <p>Suy ra $2\overrightarrow{MN} = \overrightarrow{AD} + \overrightarrow{BC} \implies \overrightarrow{MN} = \dfrac{1}{2}(\overrightarrow{AD} + \overrightarrow{BC})$ (ĐPCM).</p>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-slate-800 text-slate-400 text-xs py-6 border-t border-slate-700 mt-auto">
+        <div class="max-w-7xl mx-auto px-4 text-center space-y-2">
+            <p>© 2026 Vietschool LMS - Hệ Thống Quản Lý Học Tập Thông Minh.</p>
+            <p>Nội dung biên soạn theo chương trình GDPT Toán 12 • Tích hợp LaTeX & MathJax Tương Tác</p>
+        </div>
+    </footer>
+
+    <!-- INTERACTIVE JAVASCRIPT LOGIC -->
+    <script>
+        let currentScore = 0;
+        const answeredQuestions = new Set();
+
+        // TAB SWITCHING LOGIC
+        function switchTab(tabName) {
+            document.querySelectorAll('section[id^="sec-"]').forEach(sec => sec.classList.add('hidden'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active', 'text-slate-600'));
+            
+            document.getElementById(`sec-${tabName}`).classList.remove('hidden');
+            const activeBtn = document.getElementById(`tab-${tabName}`);
+            activeBtn.classList.add('active');
+
+            // Re-render MathJax formula when tab becomes visible
+            if (window.MathJax) {
+                MathJax.typesetPromise();
+            }
+        }
+
+        // TOGGLE SOLUTION DISPLAY
+        function toggleSolution(elementId) {
+            const el = document.getElementById(elementId);
+            el.classList.toggle('hidden');
+            if (window.MathJax) {
+                MathJax.typesetPromise();
+            }
+        }
+
+        // CHECK MCQ ANSWERS
+        function checkMCQ(qNum, option, isCorrect) {
+            const opts = document.querySelectorAll(`.q${qNum}-opt`);
+            opts.forEach(opt => {
+                opt.disabled = true;
+                opt.classList.remove('selected');
+            });
+
+            event.currentTarget.classList.add('selected');
+
+            if (isCorrect) {
+                event.currentTarget.classList.add('correct');
+                if (!answeredQuestions.has(`mcq-${qNum}`)) {
+                    currentScore += 1;
+                    answeredQuestions.add(`mcq-${qNum}`);
+                }
+            } else {
+                event.currentTarget.classList.add('incorrect');
+            }
+
+            document.getElementById(`q${qNum}-explanation`).classList.remove('hidden');
+            updateScoreDisplay();
+        }
+
+        // CHECK TRUE / FALSE ANSWERS
+        function checkTF(qNum, subId, userChoice, isCorrectAnswer) {
+            const btnT = document.getElementById(`btn-${qNum}${subId}-T`);
+            const btnF = document.getElementById(`btn-${qNum}${subId}-F`);
+            
+            btnT.disabled = true;
+            btnF.disabled = true;
+
+            const isUserRight = (userChoice === isCorrectAnswer);
+
+            if (userChoice) {
+                btnT.className = isUserRight ? "px-3 py-1 rounded bg-green-600 text-white text-xs font-semibold" : "px-3 py-1 rounded bg-red-600 text-white text-xs font-semibold";
+            } else {
+                btnF.className = isUserRight ? "px-3 py-1 rounded bg-green-600 text-white text-xs font-semibold" : "px-3 py-1 rounded bg-red-600 text-white text-xs font-semibold";
+            }
+
+            if (isUserRight && !answeredQuestions.has(`tf-${qNum}-${subId}`)) {
+                currentScore += 1;
+                answeredQuestions.add(`tf-${qNum}-${subId}`);
+                updateScoreDisplay();
+            }
+        }
+
+        // CHECK SHORT ANSWERS
+        function checkShortAns(qNum, correctAnswer) {
+            const input = document.getElementById(`short-ans-${qNum}`);
+            const feedback = document.getElementById(`short-ans-${qNum}-feedback`);
+            const userVal = input.value.trim().replace(',', '.');
+
+            feedback.classList.remove('hidden', 'text-green-600', 'text-red-600');
+
+            if (userVal === correctAnswer) {
+                feedback.textContent = "✓ Chính xác! Đáp số là " + correctAnswer;
+                feedback.classList.add('text-green-600');
+                if (!answeredQuestions.has(`short-${qNum}`)) {
+                    currentScore += 1;
+                    answeredQuestions.add(`short-${qNum}`);
+                }
+            } else {
+                feedback.textContent = "✗ Chưa đúng! Hãy kiểm tra lại phép tính.";
+                feedback.classList.add('text-red-600');
+            }
+            updateScoreDisplay();
+        }
+
+        // UPDATE SCORE DISPLAY
+        function updateScoreDisplay() {
+            document.getElementById('score-display').textContent = `${currentScore} / 8`;
+        }
+
+        // RESET QUIZ
+        function resetQuiz() {
+            currentScore = 0;
+            answeredQuestions.clear();
+            updateScoreDisplay();
+            
+            // Reload simple interactive elements
+            document.querySelectorAll('.quiz-opt').forEach(opt => {
+                opt.disabled = false;
+                opt.classList.remove('selected', 'correct', 'incorrect');
+            });
+            document.querySelectorAll('[id^="q"][id$="-explanation"]').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('[id^="short-ans-"]').forEach(el => {
+                if(el.tagName === 'INPUT') el.value = '';
+            });
+            document.querySelectorAll('[id$="-feedback"]').forEach(el => el.classList.add('hidden'));
+            
+            switchTab('practice');
+        }
+    </script>
+</body>
+</html>
